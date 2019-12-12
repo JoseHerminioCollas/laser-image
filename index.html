@@ -8,21 +8,61 @@
   <title>Laser Image</title>
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="Goatstone">
-
+  <script src="https://www.marvinj.org/releases/marvinj-1.0.js"></script>
+  <style>
+  body{
+    font-size: 11px;
+  }
+  </style>
 </head>
 
 <body>
-  <canvas id="c" width="300px" height="350px"></canvas>
-  <img width="100px" src="mona-lisa-leonardo-da-vinci-la-gioconda-oil-painting-40997.jpeg" id="my-image">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.5.0/fabric.js"></script>
+  <div style="width:500px; margin:auto">
+    <canvas id="canvas_1" width="500" height="300"></canvas>
+  </div>
+  <div style="width:601px; margin:auto">
+    <canvas id="canvas_2" width="601" height="400"></canvas>
+  </div>
+  <div id="display">x</div>
+  <canvas id="canvas-a" width="300px" height="350px"></canvas>
+  <!-- <img width="100px" src="mona-lisa-leonardo-da-vinci-la-gioconda-oil-painting-40997.jpeg" id="my-image"> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.5.0/fabric.js"></script> -->
   <script>
     const picURL = 'mona-lisa-leonardo-da-vinci-la-gioconda-oil-painting-40997.jpeg'
-    const canvas = new fabric.Canvas('c')
-    const imgElement = document.getElementById('my-image')
-    new fabric.Image.fromURL(picURL, (img) => {
-      img.scale(0.15)
-      canvas.add(img)
-    })
+    console.log('xxx')
+    var canvas1 = document.getElementById("canvas_1");
+    var canvas2 = document.getElementById("canvas_2");
+    var imageRoad = new MarvinImage();
+    // const out = []
+    const el = document.getElementById('display')
+    function cb() {
+      const d = imageRoad.imageData.data
+      let i = 0
+      while (i < d.length) {
+        //  console.log(d[i], d[i + 1], d[i + 2])
+        const total = d[i] + d[i + 1] + d[i + 2]
+        // console.log(total)
+        if (total < 400) {
+          // out.push('X')
+          el.append('X')
+        }
+        else {
+          // out.push('.')
+          el.append('.')
+        }
+        if (i % 2000 === 0){
+          const br = document.createElement('br')
+          el.append(br)
+        //  out.push('\n')
+        }
+         i += 4
+      }
+      // console.log('aaa', out.join(''))
+
+    }
+    imageRoad.load("https://i.imgur.com/NOAqlBx.jpg", cb);
+    // imageRoad.load('https://i.imgur.com/SocBkqh.jpg', cb);
+
   </script>
 </body>
 
