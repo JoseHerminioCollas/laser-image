@@ -25,10 +25,10 @@
   <div id="display">x</div>
   <canvas id="canvas-a" width="300px" height="350px"></canvas>
   <script>
-    const picURL = 'mona-lisa-leonardo-da-vinci-la-gioconda-oil-painting-40997.jpeg'
-    const picA = 'test-image.png'
-    const onlineImg = "https://i.imgur.com/NOAqlBx.jpg"
-    const monaSmall = 'mona-small.png'
+    const picA = 'mona-lisa-leonardo-da-vinci-la-gioconda-oil-painting-40997.jpeg'
+    const picB = 'test-image.png'
+    const picC = "https://i.imgur.com/NOAqlBx.jpg"
+    const picD = 'mona-small.png'
 
     var marvinImage = new MarvinImage();
     const el = document.getElementById('display')
@@ -43,14 +43,14 @@
         else {
           el.append('__')
         }
-        if (i % (100 * 4) === 0){
+        if (i % (marvinImage.imageData.width * 4) === 0){
           const br = document.createElement('br')
           el.append(br)
         }
          i += 4
       }
     }
-    marvinImage.load(monaSmall, cb);
+    marvinImage.load(picD, cb);
   </script>
 </body>
 
