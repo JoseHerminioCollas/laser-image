@@ -16,6 +16,7 @@
     }
 
     #display {
+      background: black;
       font-size: 2px;
       font-weight: 900;
       font-family: 'Courier New', Courier, monospace;
@@ -32,37 +33,50 @@
     const picB = 'test-image.png'
     const picC = "https://i.imgur.com/NOAqlBx.jpg"
     const picD = 'mona-small.png'
-
+    const picE = 'mona-sml-b.jpeg'
+    const imgDims = [600, 900]
     var marvinImage = new MarvinImage();
     var draw = SVG('drawing')
-      .size(500, 900)
+      .size(...imgDims)
+    draw.rect(...imgDims).move(10, 10)
+      .attr({ background: 'red' })
+
     const el = document.getElementById('display')
     let col = 0
     let row = 0
     const colShift = 6
     const rowShift = 6
     const radius = 3
+    const threshold = 75
+    const colorDif = 50
     function cb() {
       const d = marvinImage.imageData.data
       let i = 0
       while (i < d.length) {
-        const total = d[i] + d[i + 1] + d[i + 2]        
+        const total = d[i] + d[i + 1] + d[i + 2]
+        const [r, g, b] =  [d[i], d[i + 1], d[i + 2]]
         row += rowShift
-        if (d[i] < 100) {
+        if (total < 50) {
+          draw.circle(radius + 7)
+            .attr({ fill: 'black' })
+            .move(row, col)
+        } else if (total > 300) { // white
+          draw.circle(radius)
+            .attr({ fill: 'white' })
+            .move(row, col)
+        } else if (r > threshold && r > g + colorDif && r > g + colorDif) {r
           draw.circle(radius)
             .attr({ fill: 'red' })
-            .move(row, col - 2 )
-        }
-        if (d[i + 1] < 100) {
-          draw.circle(radius)
-            .attr({ fill: 'green' })
-            .move(row, col )
-        }
-        if (d[i + 2] < 50) {
+            .move(row, col - 2)
+        } else if (b > threshold) {
           draw.circle(radius)
             .attr({ fill: 'blue' })
             .move(row, col + 2)
-        }
+        } else if (g > threshold) {
+          draw.circle(radius)
+            .attr({ fill: 'green' })
+            .move(row, col)
+        } 
         // end of line
         if (i % (marvinImage.imageData.width * 4) === 0) {
           // const br = document.createElement('br')
@@ -72,7 +86,7 @@
         i += 4
       }
     }
-    marvinImage.load(picD, cb);
+    marvinImage.load(picE, cb);
     // SVG.on(document, 'DOMContentLoaded', function () {
     //   console.log('abc', SVG)
     //   var draw = SVG('drawing')
