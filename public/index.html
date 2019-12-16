@@ -13,6 +13,8 @@
   <style>
     body {
       font-size: 11px;
+      display: flex;
+      flex-wrap: wrap;
     }
 
     #display {
@@ -25,21 +27,34 @@
 </head>
 
 <body>
+  <div id="layer-r"></div>
+  <div id="layer-g"></div>
+  <div id="layer-b"></div>
   <div id="drawing"></div>
   <div id="display">x</div>
-  <canvas id="canvas-a" width="300px" height="350px"></canvas>
   <script>
     const picA = 'mona-lisa-leonardo-da-vinci-la-gioconda-oil-painting-40997.jpeg'
     const picB = 'test-image.png'
     const picC = "https://i.imgur.com/NOAqlBx.jpg"
     const picD = 'mona-small.png'
     const picE = 'mona-sml-b.jpeg'
-    const imgDims = [600, 900]
+    const imgDims = [200, 300]
+    const imgDimsB = [600, 900]
     var marvinImage = new MarvinImage();
     var draw = SVG('drawing')
+      .size(...imgDimsB)
+    draw.rect(...imgDimsB).move(10, 10)
+      .attr({ fill: 'orange' })
+
+    var drawR = SVG('layer-r')
       .size(...imgDims)
-    draw.rect(...imgDims).move(10, 10)
-      .attr({ background: 'red' })
+      .rect(...imgDims).move(0, 0).attr({ fill: 'red' })
+    var drawG = SVG('layer-g')
+      .size(...imgDims)
+      .rect(...imgDims).move(0, 0).attr({ fill: 'red' })
+    var drawB = SVG('layer-b')
+      .size(...imgDims)
+      .rect(...imgDims).move(0, 0).attr({ fill: 'red' })
 
     const el = document.getElementById('display')
     let col = 0
@@ -54,32 +69,21 @@
       let i = 0
       while (i < d.length) {
         const total = d[i] + d[i + 1] + d[i + 2]
-        const [r, g, b] =  [d[i], d[i + 1], d[i + 2]]
+        const [r, g, b] = [d[i], d[i + 1], d[i + 2]]
         row += rowShift
         if (total < 50) {
-          draw.circle(radius + 7)
-            .attr({ fill: 'black' })
-            .move(row, col)
+          draw.circle(radius + 7).attr({ fill: 'black' }).move(row, col)
         } else if (total > 300) { // white
-          draw.circle(radius)
-            .attr({ fill: 'white' })
-            .move(row, col)
-        } else if (r > threshold && r > g + colorDif && r > g + colorDif) {r
-          draw.circle(radius)
-            .attr({ fill: 'red' })
-            .move(row, col - 2)
+          draw.circle(radius).attr({ fill: 'white' }).move(row, col)
+        } else if (r > threshold && r > g + colorDif && r > g + colorDif) {
+          draw.circle(radius).attr({ fill: 'red' }).move(row, col - 2)
         } else if (b > threshold) {
-          draw.circle(radius)
-            .attr({ fill: 'blue' })
-            .move(row, col + 2)
+          draw.circle(radius).attr({ fill: 'blue' }).move(row, col + 2)
         } else if (g > threshold) {
-          draw.circle(radius)
-            .attr({ fill: 'green' })
-            .move(row, col)
-        } 
+          draw.circle(radius).attr({ fill: 'green' }).move(row, col)
+        }
         // end of line
         if (i % (marvinImage.imageData.width * 4) === 0) {
-          // const br = document.createElement('br')
           col += colShift
           row = 0
         }
