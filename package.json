@@ -12,6 +12,7 @@
   "dependencies": {
     "base64-arraybuffer": "^0.2.0",
     "express": "^4.17.1",
+    "jimp": "^0.9.3",
     "nodemon": "^2.0.2",
     "p5": "^0.10.2",
     "pngjs": "^3.4.0"
