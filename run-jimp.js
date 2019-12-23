@@ -12,15 +12,43 @@ Jimp.read(fD)
       0,
       0,
       100,
-      50
+      100
     )) {
-      var red = lenna.bitmap.data[idx + 0];
-      var green = lenna.bitmap.data[idx + 1];
-      var blue = lenna.bitmap.data[idx + 2];
-      if (red > 100) out.push('X')
-      else if (green > 100) out.push('-')
-      else {out.push(' ')}
-      if (x === 99) out.push('\n')
+      var r = lenna.bitmap.data[idx + 0];
+      var g = lenna.bitmap.data[idx + 1];
+      var b = lenna.bitmap.data[idx + 2];
+      const total = r + g + b
+      const colors = [
+        {
+          name: 'red',
+          val: r,
+          symbol: 'R'
+        }, {
+          name: 'green',
+          val: g,
+          symbol: 'G'
+
+        }, {
+          name: 'blue',
+          val: b,
+          symbol: 'B'
+        }
+      ]
+      // max pixel N below total
+      const maxPixel = colors.reduce((acc, el, i) => {
+        const maxColor = el.val > acc.val ? el : acc
+        // console.log(maxColor, acc.val, el.val)
+        return maxColor
+      }, colors[1])
+      // console.log(maxPixel)
+      if (total < 100) { out.push('.') }
+      else if (total > 800) { out.push('X') }
+      else out.push(maxPixel.symbol)
+      // else if (g > 200) out.push('G')
+      // else if (b > 200) out.push('B')
+
+      // else {out.push('?')}
+      if (x === 99) out.push('|\n |')
     }
     console.log(out.join(''))
   })
