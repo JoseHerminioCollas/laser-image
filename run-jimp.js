@@ -9,7 +9,7 @@ Jimp.read(fA)
   .then(lenna => {
     const out = []
     for (const { x, y, idx, img } of lenna.scanIterator(
-      0, 0, 100, 100
+      0, 0, 100, 70
     )) {
       const colors = [
         {
@@ -38,7 +38,7 @@ Jimp.read(fA)
           symbol: '?'
         }
       ]
-      let selectedSymbol = colors.filter(c => c.name === 'unknown')[0]
+      let selectedSymbol = colors.find(c => c.name === 'unknown')
       const maxColor = colors
         .reduce((acc, el, i) => el.val > acc.val ? el : acc, colors[0])
       const totalColorsVal = colors
@@ -46,11 +46,10 @@ Jimp.read(fA)
         .reduce((acc, color) => acc += color.val, 0)
       // find and set the selected color
       if (totalColorsVal < 100)
-        selectedSymbol = colors.filter(c => c.name === 'black')[0]
+        selectedSymbol = colors.find(c => c.name === 'black')
       else if (totalColorsVal > 280) {
-        selectedSymbol = colors.filter(c => c.name === 'white')[0]
-      }
-      else {
+        selectedSymbol = colors.find(c => c.name === 'white')
+      } else {
         selectedSymbol = maxColor
       }
       // generate the out display
