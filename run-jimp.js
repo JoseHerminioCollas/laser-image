@@ -14,36 +14,44 @@ const circle = `
     <circle cx="5" cy="5" r="4" />
   </svg>
 </svg>`
-function setServer(out) {
+function setSVGOut(out) {
   http.createServer(function (req, res) {
     var html = `<!DOCTYPE html>
     <html>
      <head>
      <style>
-     div {
-       font-size: 5px;
-       position: absolute;
+     body {
+       background: black;
+       display: flex;
+       justify-content: center;
+     }
+     svg {
+       transform:scale(1.0);
+       height: 600px;
     }
      </style>
      </head>
      <body>      
-      ${
+     <svg viewBox="0 0 100 149" xmlns="http://www.w3.org/2000/svg" stroke="red" fill="grey">
+     ${
       out.map((element, colI) => {
         let str = ''
         str += element.map((e ,rowI) => {
-          return `<div 
-            style="
-            top:${colI * 5}px ; 
-            left: ${rowI * 5}px ;
-            color: ${e.name};
-            background-color:none">&#11044;</div>`
+          return `<circle
+            r="0.5"
+            cx="${rowI}" 
+            cy="${colI}"
+            fill="${e.name}"
+            stroke="none"
+            />`
         }).join('')
         // str += '<br>'
         return str
       })
         .join('')
       }
-     </body>
+      </svg>
+      </body>
     </html>`
 
     res.writeHead(200, {
@@ -54,6 +62,7 @@ function setServer(out) {
     res.end(html);
   }).listen(8080);
 }
+
 
 Jimp.read(fA)
   .then(lenna => {
@@ -105,8 +114,49 @@ Jimp.read(fA)
       // console.log( x, y)
       out[y][x] = selectedSymbol
     }
-    setServer(out)
+    setSVGOut(out)
   })
   .catch(err => {
     console.error(err)
   })
+
+  function setHTMLOut(out) {
+    http.createServer(function (req, res) {
+      var html = `<!DOCTYPE html>
+      <html>
+       <head>
+       <style>
+       div {
+         font-size: 5px;
+         position: absolute;
+      }
+       </style>
+       </head>
+       <body>      
+        ${
+        out.map((element, colI) => {
+          let str = ''
+          str += element.map((e ,rowI) => {
+            return `<div 
+              style="
+              top:${colI * 5}px ; 
+              left: ${rowI * 5}px ;
+              color: ${e.name};
+              background-color:none">&#11044;</div>`
+          }).join('')
+          // str += '<br>'
+          return str
+        })
+          .join('')
+        }
+       </body>
+      </html>`
+  
+      res.writeHead(200, {
+        'Content-Type': 'text/html',
+        'Content-Length': html.length,
+        'Expires': new Date().toUTCString()
+      });
+      res.end(html);
+    }).listen(8080);
+  }
