@@ -9,7 +9,7 @@ Jimp.read(fA)
   .then(lenna => {
     const out = []
     for (const { x, y, idx, img } of lenna.scanIterator(
-      0, 0, 100, 70
+      0, 0, 100, 149
     )) {
       const colors = [
         {
