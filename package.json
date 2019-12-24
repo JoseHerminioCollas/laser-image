@@ -10,6 +10,7 @@
   "author": "Jose Collas",
   "license": "ISC",
   "dependencies": {
+    "@svgdotjs/svg.js": "^3.0.16",
     "base64-arraybuffer": "^0.2.0",
     "express": "^4.17.1",
     "jimp": "^0.9.3",

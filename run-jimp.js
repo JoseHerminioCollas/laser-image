@@ -4,10 +4,60 @@ const fA = 'mona-small.png'
 const fB = 'test-image.png'
 const fC = 'square20x20.png'
 const fD = 'color-chart.jpg'
+var http = require('http');
+
+const circle = `
+<svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" stroke="red" fill="grey">
+  <circle cx="50" cy="50" r="40" />
+  <circle cx="150" cy="50" r="4" />
+  <svg viewBox="0 0 10 10" x="200" width="100">
+    <circle cx="5" cy="5" r="4" />
+  </svg>
+</svg>`
+function setServer(out) {
+  http.createServer(function (req, res) {
+    var html = `<!DOCTYPE html>
+    <html>
+     <head>
+     <style>
+     div {
+       font-size: 5px;
+       position: absolute;
+    }
+     </style>
+     </head>
+     <body>      
+      ${
+      out.map((element, colI) => {
+        let str = ''
+        str += element.map((e ,rowI) => {
+          return `<div 
+            style="
+            top:${colI * 5}px ; 
+            left: ${rowI * 5}px ;
+            color: ${e.name};
+            background-color:none">&#11044;</div>`
+        }).join('')
+        // str += '<br>'
+        return str
+      })
+        .join('')
+      }
+     </body>
+    </html>`
+
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+      'Content-Length': html.length,
+      'Expires': new Date().toUTCString()
+    });
+    res.end(html);
+  }).listen(8080);
+}
 
 Jimp.read(fA)
   .then(lenna => {
-    const out = []
+    const out = [...Array(149)].map(() => [...Array(100)])
     for (const { x, y, idx, img } of lenna.scanIterator(
       0, 0, 100, 149
     )) {
@@ -45,21 +95,17 @@ Jimp.read(fA)
         .filter(e => ['red', 'green', 'blue'].includes(e.name))
         .reduce((acc, color) => acc += color.val, 0)
       // find and set the selected color
-      if (totalColorsVal < 100)
+      if (totalColorsVal < 150)
         selectedSymbol = colors.find(c => c.name === 'black')
-      else if (totalColorsVal > 280) {
+      else if (totalColorsVal > 310) {
         selectedSymbol = colors.find(c => c.name === 'white')
       } else {
         selectedSymbol = maxColor
       }
-      // generate the out display
-      if (x === 0) out.push('|')
-      out.push(selectedSymbol.symbol)
-      if (x === 99) out.push('|\n')
+      // console.log( x, y)
+      out[y][x] = selectedSymbol
     }
-    console.log('-'.repeat(lenna.getWidth() + 2))
-    console.log(out.join(''))
-    console.log('-'.repeat(lenna.getWidth() + 2))
+    setServer(out)
   })
   .catch(err => {
     console.error(err)
