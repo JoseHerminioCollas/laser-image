@@ -73,46 +73,53 @@ Jimp.read(fA)
       const colors = [
         {
           name: 'red',
+          fillValue: 'red',
           val: lenna.bitmap.data[idx + 0],
           symbol: 'r'
         }, {
           name: 'green',
+          fillValue: 'green',
           val: lenna.bitmap.data[idx + 1],
           symbol: 'g'
 
         }, {
           name: 'blue',
           val: lenna.bitmap.data[idx + 2],
+          fillValue: 'blue',
           symbol: 'b'
         },
         {
           name: 'white',
+          fillValue: 'white',
           symbol: 'X'
         },
         {
           name: 'black',
+          fillValue: 'black',
           symbol: ' '
         }, {
           name: 'unknown',
+          fillValue: 'red',
           symbol: '?'
         }
       ]
-      let selectedSymbol = colors.find(c => c.name === 'unknown')
+      let selectedColor = colors.find(c => c.name === 'unknown')
+
       const maxColor = colors
         .reduce((acc, el, i) => el.val > acc.val ? el : acc, colors[0])
       const totalColorsVal = colors
         .filter(e => ['red', 'green', 'blue'].includes(e.name))
         .reduce((acc, color) => acc += color.val, 0)
-      // find and set the selected color
-      if (totalColorsVal < 150)
-        selectedSymbol = colors.find(c => c.name === 'black')
-      else if (totalColorsVal > 310) {
-        selectedSymbol = colors.find(c => c.name === 'white')
-      } else {
-        selectedSymbol = maxColor
+
+        // find and set the selected color
+      if (totalColorsVal < 150) // black
+        selectedColor = colors.find(c => c.name === 'black')
+      else if (totalColorsVal > 310) { // white
+        selectedColor = colors.find(c => c.name === 'white')
+      } else { // color choosen as the maximum color
+        selectedColor = maxColor
       }
-      // console.log( x, y)
-      out[y][x] = selectedSymbol
+      out[y][x] = selectedColor
     }
     setSVGOut(out)
   })
