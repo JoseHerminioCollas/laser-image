@@ -3,7 +3,7 @@ function colorsToSVG(colors) {
     let str = ''
     str += element.map((e, rowI) => {
       return `<circle
-        r="0.5"
+        r="0.25"
         cx="${rowI}" 
         cy="${colI}"
         fill="${e.fillValue}"
@@ -14,7 +14,15 @@ function colorsToSVG(colors) {
   })
     .join('')
 
-  return contentString
+  return `<svg 
+    viewBox="0 0 100 149" 
+    xmlns="http://www.w3.org/2000/svg" 
+    stroke="red" 
+    fill="grey"
+    height="600"
+    >
+      ${contentString}
+     </svg>`
 }
 
 module.exports = colorsToSVG

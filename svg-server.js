@@ -11,16 +11,10 @@ function SVGServer(contentString = '') {
        display: flex;
        justify-content: center;
      }
-     svg {
-       transform:scale(1.0);
-       height: 600px;
-    }
      </style>
      </head>
      <body>      
-     <svg viewBox="0 0 100 149" xmlns="http://www.w3.org/2000/svg" stroke="red" fill="grey">
      ${contentString}
-      </svg>
       </body>
     </html>`
 
