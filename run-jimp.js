@@ -36,12 +36,12 @@ function setSVGOut(out) {
      ${
       out.map((element, colI) => {
         let str = ''
-        str += element.map((e ,rowI) => {
+        str += element.map((e, rowI) => {
           return `<circle
             r="0.5"
             cx="${rowI}" 
             cy="${colI}"
-            fill="${e.name}"
+            fill="${e.fillValue}"
             stroke="none"
             />`
         }).join('')
@@ -63,6 +63,41 @@ function setSVGOut(out) {
   }).listen(8080);
 }
 
+const colors = {
+  red:
+  {
+    name: 'red',
+    fillValue: 'red',
+    val: 0, // value found in image pixel
+    symbol: 'r'
+  },
+  green: {
+    name: 'green',
+    fillValue: 'green',
+    val: 0,
+    symbol: 'g'
+
+  }, blue: {
+    name: 'blue',
+    val: 0,
+    fillValue: 'blue',
+    symbol: 'b'
+  },
+  white: {
+    name: 'white',
+    fillValue: 'white',
+    symbol: 'X'
+  },
+  black: {
+    name: 'black',
+    fillValue: 'black',
+    symbol: ' '
+  }, unknown: {
+    name: 'unknown',
+    fillValue: 'orange',
+    symbol: '?'
+  }
+}
 
 Jimp.read(fA)
   .then(lenna => {
@@ -70,55 +105,23 @@ Jimp.read(fA)
     for (const { x, y, idx, img } of lenna.scanIterator(
       0, 0, 100, 149
     )) {
-      const colors = [
-        {
-          name: 'red',
-          fillValue: 'red',
-          val: lenna.bitmap.data[idx + 0],
-          symbol: 'r'
-        }, {
-          name: 'green',
-          fillValue: 'green',
-          val: lenna.bitmap.data[idx + 1],
-          symbol: 'g'
+      colors.red.val = lenna.bitmap.data[idx + 0]
+      colors.green.val = lenna.bitmap.data[idx + 1]
+      colors.blue.val = lenna.bitmap.data[idx + 2]
+      let selectedColor = colors.unknown.fillValue
+      const maxColor = Object.entries(colors)
+        .reduce((acc, el, i) => el[1].val > acc.val ? el[1] : acc, colors.red)
+      const totalColorsVal = colors.red.val + colors.green.val + colors.blue.val
 
-        }, {
-          name: 'blue',
-          val: lenna.bitmap.data[idx + 2],
-          fillValue: 'blue',
-          symbol: 'b'
-        },
-        {
-          name: 'white',
-          fillValue: 'white',
-          symbol: 'X'
-        },
-        {
-          name: 'black',
-          fillValue: 'black',
-          symbol: ' '
-        }, {
-          name: 'unknown',
-          fillValue: 'red',
-          symbol: '?'
-        }
-      ]
-      let selectedColor = colors.find(c => c.name === 'unknown')
-
-      const maxColor = colors
-        .reduce((acc, el, i) => el.val > acc.val ? el : acc, colors[0])
-      const totalColorsVal = colors
-        .filter(e => ['red', 'green', 'blue'].includes(e.name))
-        .reduce((acc, color) => acc += color.val, 0)
-
-        // find and set the selected color
       if (totalColorsVal < 150) // black
-        selectedColor = colors.find(c => c.name === 'black')
+        selectedColor = colors.black
       else if (totalColorsVal > 310) { // white
-        selectedColor = colors.find(c => c.name === 'white')
+        selectedColor = colors.white
       } else { // color choosen as the maximum color
         selectedColor = maxColor
       }
+
+      // set the result that will be used
       out[y][x] = selectedColor
     }
     setSVGOut(out)
