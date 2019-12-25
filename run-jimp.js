@@ -16,11 +16,10 @@ const images = [
 Jimp.read(images[0])
   .then(lenna => {
     // get the colors definitions, convert to SVG, send to server
-    const r = colorsToRGBSVG(getRGBColors(lenna, colors))
-    console.log(r)
-    SVGServer(
-      colorsToRGBSVG(
-        getRGBColors(lenna, colors)))
+    const imageColors = getRGBColors(lenna, colors)
+    let SVGContent = colorsToRGBSVG(imageColors)
+    SVGContent += colorsToSVG(imageColors)
+    SVGServer(SVGContent)
   })
   .catch(err => {
     console.error(err)
