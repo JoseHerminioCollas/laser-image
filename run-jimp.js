@@ -1,6 +1,8 @@
 var Jimp = require('jimp');
 const SVGServer = require('./svg-server')
 const colors = require('./colors')
+const colorsToSVG = require('./colors-to-svg')
+
 const images = [
   'mona-small.png',
   'mona-lisa-leonardo-da-vinci-la-gioconda-oil-painting-40997.jpeg',
@@ -41,21 +43,3 @@ Jimp.read(images[0])
   .catch(err => {
     console.error(err)
   })
-function colorsToSVG(colors) {
-  const contentString = colors.map((element, colI) => {
-    let str = ''
-    str += element.map((e, rowI) => {
-      return `<circle
-        r="0.5"
-        cx="${rowI}" 
-        cy="${colI}"
-        fill="${e.fillValue}"
-        stroke="none"
-        />`
-    }).join('')
-    return str
-  })
-    .join('')
-
-  return contentString
-}
