@@ -2,6 +2,7 @@ var Jimp = require('jimp');
 const SVGServer = require('./svg-server')
 const colors = require('./colors')
 const colorsToSVG = require('./colors-to-svg')
+const colorsToRGBSVG = require('./colors-to-rgb-svg')
 const getRGBColors = require('./get-rgb-colors')
 
 const images = [
@@ -15,8 +16,10 @@ const images = [
 Jimp.read(images[0])
   .then(lenna => {
     // get the colors definitions, convert to SVG, send to server
+    const r = colorsToRGBSVG(getRGBColors(lenna, colors))
+    console.log(r)
     SVGServer(
-      colorsToSVG(
+      colorsToRGBSVG(
         getRGBColors(lenna, colors)))
   })
   .catch(err => {
