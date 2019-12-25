@@ -1,10 +1,11 @@
+var http = require('http');
 var Jimp = require('jimp');
+const colors = require('./colors')
 const fileName = 'mona-lisa-leonardo-da-vinci-la-gioconda-oil-painting-40997.jpeg'
 const fA = 'mona-small.png'
 const fB = 'test-image.png'
 const fC = 'square20x20.png'
 const fD = 'color-chart.jpg'
-var http = require('http');
 
 const circle = `
 <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" stroke="red" fill="grey">
@@ -63,41 +64,6 @@ function setSVGOut(out) {
   }).listen(8080);
 }
 
-const colors = {
-  red:
-  {
-    name: 'red',
-    fillValue: 'red',
-    val: 0, // value found in image pixel
-    symbol: 'r'
-  },
-  green: {
-    name: 'green',
-    fillValue: 'green',
-    val: 0,
-    symbol: 'g'
-
-  }, blue: {
-    name: 'blue',
-    val: 0,
-    fillValue: 'blue',
-    symbol: 'b'
-  },
-  white: {
-    name: 'white',
-    fillValue: 'white',
-    symbol: 'X'
-  },
-  black: {
-    name: 'black',
-    fillValue: 'black',
-    symbol: ' '
-  }, unknown: {
-    name: 'unknown',
-    fillValue: 'orange',
-    symbol: '?'
-  }
-}
 
 Jimp.read(fA)
   .then(lenna => {
