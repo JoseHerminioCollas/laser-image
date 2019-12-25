@@ -1,7 +1,6 @@
 function colorsToSVG(colors) {
   const contentString = colors.map((element, colI) => {
-    let str = ''
-    str += element.map((e, rowI) => {
+    return element.map((e, rowI) => {
       return `<circle
         r="0.25"
         cx="${rowI}" 
@@ -10,9 +9,7 @@ function colorsToSVG(colors) {
         stroke="none"
         />`
     }).join('')
-    return str
-  })
-    .join('')
+  }).join('')
 
   return `<svg 
     viewBox="0 0 100 149" 
