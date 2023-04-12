@@ -5,7 +5,7 @@
 fileName = 'laser-test.svg'
 f = open(fileName, 'w')
 
-def circleTag(radius, colWidth, rowWidth):
+def circleTags(radius, colWidth, rowWidth):
  tag = ''
  rowCount = 0
  totalRowCount = 10
@@ -16,7 +16,6 @@ def circleTag(radius, colWidth, rowWidth):
   while colCount < totalColCount:
    colIncrement = colCount * colWidth
    tag += '<circle r="0.1" cx="{0}" cy="{1}" fill="none" stroke="black" strokeWidth="0.001" />'.format(colIncrement, rowIncrement)
-   # f.write(circleTag)
    colCount += 1
   rowCount += 1
  return tag
@@ -24,8 +23,7 @@ def circleTag(radius, colWidth, rowWidth):
 colWidth = 2
 rowWidth = 2
 radius = 1
-c = circleTag(radius, colWidth, rowWidth)
-print(c)
+c = circleTags(radius, colWidth, rowWidth)
 # write the contents of the SVG file
 f.write('<svg>')
 f.write(c)
