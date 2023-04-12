@@ -1,16 +1,23 @@
 # laser-test.py
 # create an SVG file that can be used for laser cutting
 
-fileName = 'test-a.svg'
-r = 10
-tag = '<circle r={0} cx="100" cy="100" fill="none" stroke="0.001" />'.format(r)
+# create the file
+fileName = 'laser-test.svg'
 f = open(fileName, 'w')
-# write
-f.write('<svg>')
-f.write(tag)
-f.write('<svg>')
 
-# ??? I do not see this printing to the screen 
-# b = open(fileName, 'r')
-# c = b.readline()
-# xsprint('xx{0}'.format(c))
+# write the contents of the SVG file
+f.write('<svg>')
+rowCount = 0
+totalRowCount = 10
+while rowCount < totalRowCount:
+ # rowIncrement = 2 * rowCount
+ colCount = 0
+ totalColCount = 10
+ while colCount < totalColCount:
+  rowIncrement = rowCount * 2
+  colIncrement = colCount * 2
+  circleTag = '<circle r="0.1" cx="{0}" cy="{1}" fill="none" stroke="0.001" />'.format(colIncrement, rowIncrement)
+  f.write(circleTag)
+  colCount += 1
+ rowCount += 1
+f.write('<svg>')
