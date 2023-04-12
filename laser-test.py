@@ -16,7 +16,7 @@ while rowCount < totalRowCount:
  while colCount < totalColCount:
   rowIncrement = rowCount * 2
   colIncrement = colCount * 2
-  circleTag = '<circle r="0.1" cx="{0}" cy="{1}" fill="none" stroke="0.001" />'.format(colIncrement, rowIncrement)
+  circleTag = '<circle r="0.1" cx="{0}" cy="{1}" fill="none" stroke="black" strokeWidth="0.001" />'.format(colIncrement, rowIncrement)
   f.write(circleTag)
   colCount += 1
  rowCount += 1
