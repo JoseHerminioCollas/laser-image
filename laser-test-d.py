@@ -4,9 +4,9 @@ import math
 
 rowS = ''
 offSet = 20
-r = 1.5
+r = 1
 # for 12 steps 1/12 1/steps
-steps = 170
+steps = 160
 angleIncrement = 0.1
 tagString = '<circle r="{0}" cx="{2}" cy="{1}" fill="none" stroke="black" stroke-width="0.01mm" />'
 
@@ -30,7 +30,8 @@ f = open(fileName, 'w')
 f.write('<svg width="40" height="40">')
 f.write('<circle r="20" cx="20" cy="20" fill="none" stroke="black" stroke-width="0.01mm" />'
 )
+f.write('<circle r="2" cx="36.1" cy="20" fill="none" stroke="black" stroke-width="0.01mm" />'
+)
 f.write(rowS)
-
-f.write('<text x="2" y="19" font-size="1.5">vericite</text>')
+f.write('<text x="2" y="18.5" font-size="1.5">vericite</text>')
 f.write('</svg>')
