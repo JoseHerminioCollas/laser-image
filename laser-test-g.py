@@ -4,23 +4,36 @@ rowS = ''
 offSet = 30
 #r = 0 # math.pi * 0.6 # spiral radius starr
 steps = 100
-angleIncrement = math.pi * 0.125
+angleIncrement = math.pi * 0.5 # * 0.06
+currAngle = 0
 tagString = '<circle r="{0}" cx="{2}" cy="{1}" fill="none" stroke="black" stroke-width="0.01mm" />'
 spiralRadiusOffset = 0
 
 i = 0
 while i <= steps:
  #angleIncrement = angleIncrement * 0.9
- angleX = angleIncrement * i
- angleY = angleIncrement * i
+ angleX = currAngle
+ angleY = currAngle
+ angleIncrement = 0.5
+ #angleIncrement = angleIncrement - 0.05
+ #if angleIncrement < 0.1:
+  #angleIncrement = math.pi * 0.1
+ #angleIncrement = math.pi
+ currAngle = currAngle + angleIncrement
  spiralRadius = spiralRadiusOffset
  # as spiral moves outward decrease the size that the spiral is increased
- spiralRadiusOffset = spiralRadiusOffset + 0.1 # - (i * 0.1)
+ # quantity to add each iteration
+ a = 5 - i * 2
+ if a < 0.1:
+  a = 0.2
+ spiralRadiusOffset = spiralRadiusOffset + a # - (i * 0.1)
  #spiralRadius = 10
  x = math.cos(angleX) * spiralRadius + offSet
  y = math.sin(angleY) * spiralRadius + offSet
- #circleRadius = 2 - (i * 0.01)
- circleRadius = 0.3
+ circleRadius = 2 - (i * 0.15)
+ if circleRadius < 0:
+  circleRadius = 0.1 
+ #circleRadius = 0.3
  rowS += tagString.format(circleRadius, y, x)
  i += 1
   
