@@ -19,9 +19,9 @@ while i <= steps:
  #angleIncrement = angleIncrement - 0.05
  #angleIncrement = math.pi
  currAngle = currAngle + angleIncrement
- angleIncrement = angleIncrement * 0.9
- if angleIncrement < 0.1:
-  angleIncrement = 0.1
+ angleIncrement = angleIncrement * 0.8
+ if angleIncrement < 0.3:
+  angleIncrement = 0.3
  #spiralRadius = spiralRadiusOffset
  # as spiral moves outward decrease the size that the spiral is increased
  # quantity to add each iteration
@@ -33,9 +33,9 @@ while i <= steps:
  x = math.cos(angleX) * spiralRadius + offSet
  y = math.sin(angleY) * spiralRadius + offSet
  spiralRadius = spiralRadius + spiralRadiusIncrement
- spiralRadiusIncrement = spiralRadiusIncrement * 0.75
- if spiralRadiusIncrement < 0.1:
-  spiralRadiusIncrement = 0.1
+ spiralRadiusIncrement = spiralRadiusIncrement * 0.55
+ if spiralRadiusIncrement < 0.2:
+  spiralRadiusIncrement = 0.2
  circleRadius = 2 - (i * 0.05)
  if circleRadius < 0:
   circleRadius = 0.1 
