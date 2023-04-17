@@ -3,64 +3,73 @@ logo = [
  [1,0,1],
  [1,0,1],
  [1,0,1],
+ [1,0,1],
  [0,1,0]
  ],
  [
- [1,1,1],
+ [0,1,0],
  [1,0,1],
  [1,1,1],
+ [1,0,1],
  [1,0,1]
  ],
  [
  [1,1,1],
+ [1,0,1],
  [1,1,1],
  [1,1,0],
  [1,0,1]
  ],
  [
- [1,0,1],
- [1,0,1],
- [1,0,1],
+ [1,1,1],
+ [0,1,0],
+ [0,1,0],
+ [0,1,0],
+ [1,1,1]
+ ],
+ [
+ [1,1,1],
+ [1,0,0],
+ [1,0,0],
+ [1,0,0],
+ [1,1,1]
+ ],
+ [
+ [1,1,1],
+ [0,1,0],
+ [0,1,0],
+ [0,1,0],
+ [1,1,1]
+ ],
+ [
+ [1,1,1],
+ [0,1,0],
+ [0,1,0],
+ [0,1,0],
  [0,1,0]
  ],
  [
- [1,0,1],
- [1,0,1],
- [1,0,1],
- [0,1,0]
- ],
- [
- [1,0,1],
- [1,0,1],
- [1,0,1],
- [0,1,0]
- ],
- [
- [1,0,1],
- [1,0,1],
- [1,0,1],
- [0,1,0]
- ],
- [
- [1,0,1],
- [1,0,1],
- [1,0,1],
- [0,1,0]
+ [1,1,1],
+ [1,0,0],
+ [1,1,1],
+ [1,0,0],
+ [1,1,1],
  ]
 ]
- # write the logo with dots
-
+# write the logo with dots
 def getLogo(arg):
- logoStr = '<circle r="1" cx="30" cy="30" fill="red"  stroke-width="1" />'
- offSetX = 30
- offSetY = 30
+ shrink = 0.4
+ logoStr = ''
+ offSetX = 22.8
+ offSetY = 56.5
+ dotRadius = 0.1
  for indexLogo, letter in enumerate(logo):
   for index, letterRow in enumerate(letter):
-   cy = offSetY + index
+   cy = offSetY + (index * shrink)
    for i, dot in enumerate(letterRow):
     if dot == 1:
-     cx = offSetX + i
-     logoStr += '<circle r="0.5" cx="{0}" cy="{1}" fill="green"  stroke-width="1" />'.format(cx, cy)
-  offSetX += 4
+     cx = offSetX + (i * 0.5)
+     logoStr += '<circle r="{2}" cx="{0}" cy="{1}" fill="none" stroke-width="0.05" />'.format(cx, cy, dotRadius)
+  offSetX += 1.9
  
  return logoStr

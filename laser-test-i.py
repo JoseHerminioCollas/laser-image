@@ -1,8 +1,7 @@
 import math
 from getLogo import getLogo
-logoStr = getLogo('xxxx')
-print(logoStr)
 
+logoStr = getLogo('xxx')
 rowS = ''
 offSet = 30
 steps = 350
@@ -39,9 +38,9 @@ fileName = 'laser-test-i.svg'
 f = open(fileName, 'w')
 
 # write the contents of the SVG file
-f.write('<svg width="60" height="60">')
+f.write('<svg width="60" height="60" stroke="black">')
 f.write('<circle r="30" cx="30" cy="30" fill="none" stroke="black" stroke-width="0.01mm" />')
 f.write(logoStr)
 f.write(rowS)
-f.write('<text x="26" y="57" font-size="2.5">vericite</text>')
+# f.write('<text x="26" y="57" font-size="2.5">vericite</text>')
 f.write('</svg>')
