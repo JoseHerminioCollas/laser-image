@@ -2,7 +2,7 @@ import math
 
 rowS = ''
 offSet = 30
-steps = 190
+steps = 320
 currAngle = 0
 angleIncrement = math.pi * 0.4 # * 0.06
 spiralRadius = 3
@@ -14,19 +14,19 @@ while i <= steps:
  angleX = currAngle
  angleY = currAngle
  currAngle = currAngle + angleIncrement
- angleIncrement = angleIncrement * 0.9
+ angleIncrement = angleIncrement * 0.91
  if angleIncrement <= 0.15:
   angleIncrement = 0.15
  x = math.cos(angleX) * spiralRadius + offSet
  y = math.sin(angleY) * spiralRadius + offSet
  spiralRadius = spiralRadius + spiralRadiusIncrement
  spiralRadiusIncrement = spiralRadiusIncrement * 0.96
- if spiralRadiusIncrement <= 0.05:
+ if spiralRadiusIncrement <= 0.4:
   spiralRadiusIncrement = 0.05
 
- circleRadius = 1.5 - (i * 0.05)
- if circleRadius <= 0.1:
-  circleRadius = 0.1 
+ circleRadius = 1.5 - (i * 0.04)
+ if circleRadius <= 0.05:
+  circleRadius = 0.05
  rowS += tagString.format(circleRadius, y, x)
  i += 1
   
