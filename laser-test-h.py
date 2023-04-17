@@ -2,7 +2,7 @@ import math
 
 rowS = ''
 offSet = 30
-steps = 320
+steps = 350
 currAngle = 0
 angleIncrement = math.pi * 0.4 # * 0.06
 spiralRadius = 3
