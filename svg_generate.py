@@ -1,6 +1,8 @@
 import cv2
 
-def svg_generate(read_image_path, svg_file_name, max, grid_cell_size):
+def svg_generate(
+    read_image_path, svg_file_name, max, grid_cell_size, width, height
+    ):
   img = cv2.imread(read_image_path, 0)
   r,c = img.shape
   rows = ''
@@ -14,7 +16,7 @@ def svg_generate(read_image_path, svg_file_name, max, grid_cell_size):
       diaphram_size_radius = round((p * max)/2, 1)
       rows += '<circle r="{}mm" cx="{}mm" cy="{}mm" />'.format( diaphram_size_radius, cx, cy)
 
-  svg_file_contents =  '<svg width="200mm" height="300mm">'
+  svg_file_contents =  '<svg width="{}mm" height="{}mm">'.format(width, height)
   svg_file_contents += rows
   svg_file_contents += '</svg>' 
 
