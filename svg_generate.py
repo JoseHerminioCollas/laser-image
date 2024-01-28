@@ -1,23 +1,24 @@
 import cv2
 
+
 def svg_generate(
-    read_image_path, svg_file_name, max, grid_cell_size, width, height
-    ):
-  img = cv2.imread(read_image_path, 0)
-  r,c = img.shape
-  rows = ''
-  for i in range(r):
-    for j in range(c):
-      k = img[i,j]
-      # gray scale value in terms of a percentage
-      p = k / 255
-      cx = grid_cell_size * j
-      cy = grid_cell_size * i
-      diaphram_size_radius = round((p * max)/2, 1)
-      rows += '<circle r="{}mm" cx="{}mm" cy="{}mm" />'.format( diaphram_size_radius, cx, cy)
+        source_image_path,  max_diaphragm_size, grid_cell_size, width, height
+):
+    source_image = cv2.imread(source_image_path, 0)
+    image_rows, image_columns = source_image.shape
+    svg_circles = ''
+    for i in range(image_rows):
+        for j in range(image_columns):
+            gray_scale = source_image[i, j]
+            # gray scale value in terms of a percentage
+            gray_scale_percent = gray_scale / 255
+            circle_x = grid_cell_size * j
+            circle_y = grid_cell_size * i
+            diaphragm_radius = round((gray_scale_percent * max_diaphragm_size) / 2, 1)
+            svg_circles += '<circle r="{}mm" cx="{}mm" cy="{}mm" />'.format(diaphragm_radius, circle_x, circle_y)
 
-  svg_file_contents =  '<svg width="{}mm" height="{}mm">'.format(width, height)
-  svg_file_contents += rows
-  svg_file_contents += '</svg>' 
+    svg_file_contents = '<svg width="{}mm" height="{}mm">'.format(width, height)
+    svg_file_contents += svg_circles
+    svg_file_contents += '</svg>'
 
-  return svg_file_contents
+    return svg_file_contents
