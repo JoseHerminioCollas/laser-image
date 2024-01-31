@@ -1,7 +1,7 @@
 from svg_generate import svg_generate
 
-read_image_path = 'source_images/mona-small-gray-2024-1-30.png'
-svg_file_name = 'generated_files/mona-small-2024-1-30.svg'
+read_image_path = 'source_images/mona-small-crop-gray-2024-1-31.jpeg'
+svg_file_name = 'generated_files/mona-small-2024-1-31.svg'
 max_diaphragm_size = 1.5
 grid_cell_size = 2
 width = 100
